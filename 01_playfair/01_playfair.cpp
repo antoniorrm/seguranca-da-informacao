@@ -6,18 +6,25 @@ using namespace std;
 // Não vai ter W
 char tabela[5][5];
 
-void init_table() {
-    for (int i = 0; i < 5; i++) {
-        for (int j = 0; j < 5; j++) {
+void init_table()
+{
+    for (int i = 0; i < 5; i++)
+    {
+        for (int j = 0; j < 5; j++)
+        {
             tabela[i][j] = ' ';
         }
     }
 }
 
-pair<int, int> buscar(char a) {
-    for (int i = 0; i < 5; i++) {
-        for (int j = 0; j < 5; j++) {
-            if (tabela[i][j] == a){
+pair<int, int> buscar(char a)
+{
+    for (int i = 0; i < 5; i++)
+    {
+        for (int j = 0; j < 5; j++)
+        {
+            if (tabela[i][j] == a)
+            {
                 return make_pair(i, j);
             }
         }
@@ -25,9 +32,12 @@ pair<int, int> buscar(char a) {
     return make_pair(0, 0);
 }
 
-bool exists(char a) {
-    for (int i = 0; i < 5; i++) {
-        for (int j = 0; j < 5; j++) {
+bool exists(char a)
+{
+    for (int i = 0; i < 5; i++)
+    {
+        for (int j = 0; j < 5; j++)
+        {
             if (tabela[i][j] == a)
                 return true;
         }
@@ -35,10 +45,14 @@ bool exists(char a) {
     return false;
 }
 
-void insere_char(char a) {
-    for (int i = 0; i < 5; i++) {
-        for (int j = 0; j < 5; j++) {
-            if (tabela[i][j] == ' ') {
+void insere_char(char a)
+{
+    for (int i = 0; i < 5; i++)
+    {
+        for (int j = 0; j < 5; j++)
+        {
+            if (tabela[i][j] == ' ')
+            {
                 tabela[i][j] = a;
                 return;
             }
@@ -46,63 +60,85 @@ void insere_char(char a) {
     }
 }
 
-void montar_tabela(string key) {
+void montar_tabela(string key)
+{
     init_table();
-    for (int i = 0; i < key.size(); i++) {
-        if (!exists(key[i])) {
+    for (int i = 0; i < key.size(); i++)
+    {
+        if (!exists(key[i]))
+        {
             insere_char(key[i]);
         }
     }
 
-    for (int i = 97; i <= 122; i++) {
-        if ((char)i != 'w' && !exists((char)i)) {
+    for (int i = 97; i <= 122; i++)
+    {
+        if ((char)i != 'w' && !exists((char)i))
+        {
             insere_char((char)i);
         }
     }
 }
 
-string criptografar(string frase) {
+string criptografar(string frase)
+{
     string pares = "";
     string criptografado = "";
     int size = frase.size();
-    for (int i = 0; i < size; i++) {
-        if(frase[i] == ' ' || frase[i] - 0 < 97 || frase[i] - 0 > 122)
+    for (int i = 0; i < size; i++)
+    {
+        if (frase[i] == ' ' || frase[i] - 0 < 97 || frase[i] - 0 > 122)
             continue;
-        if (i + 1 < size) {
+        if (i + 1 < size)
+        {
             int iCur = i;
             int iNext = i + 1;
-            while(frase[iNext] == ' ') {
+            while (frase[iNext] == ' ')
+            {
                 iNext++;
                 i++;
             }
-            if (frase[iCur] == frase[iNext]) {
+            if (frase[iCur] == frase[iNext])
+            {
                 pares.insert(pares.size(), 1, frase[i]);
-                if (frase[iNext] == 'x') {
+                if (frase[iNext] == 'x')
+                {
                     pares.insert(pares.size(), 1, 'z');
-                } else {
+                }
+                else
+                {
                     pares.insert(pares.size(), 1, 'x');
                 }
-            } else {
+            }
+            else
+            {
                 pares.insert(pares.size(), 1, frase[iCur]);
                 pares.insert(pares.size(), 1, frase[iNext]);
                 i++;
             }
-        } else {
+        }
+        else
+        {
             pares.insert(pares.size(), 1, frase[i]);
-            if (frase[i] == 'x') {
+            if (frase[i] == 'x')
+            {
                 pares.insert(pares.size(), 1, 'z');
-            } else {
+            }
+            else
+            {
                 pares.insert(pares.size(), 1, 'x');
             }
         }
     }
 
-    for (int i = 0; i < pares.size(); i+=2) {
+    for (int i = 0; i < pares.size(); i += 2)
+    {
         pair<int, int> posA = buscar(pares[i]);
         pair<int, int> posB = buscar(pares[i + 1]);
 
         int x, y;
-        if (posA.first == posB.first) {
+        if (posA.first == posB.first)
+        {
             //mesma linha
             x = posA.first;
             y = (posA.second + 1) % 5;
@@ -111,7 +147,9 @@ string criptografar(string frase) {
             x = posB.first;
             y = (posB.second + 1) % 5;
             criptografado.insert(criptografado.size(), 1, tabela[x][y]);
-        } else if (posA.second == posB.second) {
+        }
+        else if (posA.second == posB.second)
+        {
             // mesma coluna
             x = (posA.first + 1) % 5;
             y = posA.second;
@@ -120,7 +158,9 @@ string criptografar(string frase) {
             x = (posB.first + 1) % 5;
             y = posB.second;
             criptografado.insert(criptografado.size(), 1, tabela[x][y]);
-        } else {
+        }
+        else
+        {
             x = posA.first;
             y = posB.second;
             criptografado.insert(criptografado.size(), 1, tabela[x][y]);
@@ -137,14 +177,17 @@ string criptografar(string frase) {
     } */
 }
 
-string descriptografar(string frase_criptog) {
+string descriptografar(string frase_criptog)
+{
     string descriptografado = "";
-    for (int i = 0; i < frase_criptog.size(); i+= 2) {
+    for (int i = 0; i < frase_criptog.size(); i += 2)
+    {
         pair<int, int> posA = buscar(frase_criptog[i]);
         pair<int, int> posB = buscar(frase_criptog[i + 1]);
 
         int x, y;
-        if (posA.first == posB.first) {
+        if (posA.first == posB.first)
+        {
             //mesma linha
             x = posA.first;
             y = (posA.second - 1) < 0 ? 4 : (posA.second - 1);
@@ -154,16 +197,20 @@ string descriptografar(string frase_criptog) {
             x = posB.first;
             y = (posB.second - 1) < 0 ? 4 : (posB.second - 1);
             descriptografado.insert(descriptografado.size(), 1, tabela[x][y]);
-        } else if (posA.second == posB.second) {
+        }
+        else if (posA.second == posB.second)
+        {
             // mesma coluna
-            y = (posA.first - 1) < 0 ? 4 : (posA.first - 1);
+            x = (posA.first - 1) < 0 ? 4 : (posA.first - 1);
             y = posA.second;
             descriptografado.insert(descriptografado.size(), 1, tabela[x][y]);
 
-            y = (posB.first - 1) < 0 ? 4 : (posB.first - 1);
+            x = (posB.first - 1) < 0 ? 4 : (posB.first - 1);
             y = posB.second;
             descriptografado.insert(descriptografado.size(), 1, tabela[x][y]);
-        } else {
+        }
+        else
+        {
             x = posA.first;
             y = posB.second;
             descriptografado.insert(descriptografado.size(), 1, tabela[x][y]);
@@ -178,11 +225,24 @@ string descriptografar(string frase_criptog) {
 
 int main(int argc, char *argv[])
 {
+    char ch;
     string key, frase;
+
+    FILE *arq;
+	arq = fopen("frase.txt", "r");
+	
     cout << "[KEY]: ";
     getline(cin, key);
-    cout << "Frase: ";
-    getline(cin, frase);
+    // cout << "Frase: ";
+    // getline(cin, frase);
+    //Ler frase a partir do arquivo
+    if(arq == NULL)
+	    printf("Erro, nao foi possivel abrir o arquivo\n");
+	else
+	    while( (ch=fgetc(arq))!= EOF )
+		    frase += ch;
+			
+	fclose(arq);
 
     montar_tabela(key);
 
@@ -191,14 +251,6 @@ int main(int argc, char *argv[])
 
     string descriptografado = descriptografar(frase_criptogr);
     cout << "Frase descriptografada: " << descriptografado << endl;
-
-
-    for (int i = 0; i < 5; i++) {
-        for (int j = 0; j < 5; j++) {
-            cout << tabela[i][j];
-        }
-        cout << endl;
-    }
 
     return 0;
 }

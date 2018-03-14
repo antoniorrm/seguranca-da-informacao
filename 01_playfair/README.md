@@ -1,9 +1,10 @@
 ## Relatório 01_Playfair
-
-- O que foi feito da atividade e o que não foi feito.
-- Com quem você fez.
-- O que você sabe fazer do que está sendo apresentado.
-- Como vocês dividiram/fizeram a atividade.
-- O que você aprendeu e o que ainda tem dificuldade.
-- Quanto tempo você gastou no total na atividade.
+- Foi feito o  que foi pedido, Pesquisamos como funcionava a Cifra de Playfair
+ o algoritmo playfair foi feito em C++ e lendo de um arquivo txt, fiquei em 
+ dúvida em o que era pra ler do arquivo(chave e frase ou só uma) então colocamos so a 
+ frase no txt;
+- Fiz esta atividade com o @jordaos
+- Foquei na parte de construção da tabela e leitura do arquivo e o @jordaos na parte da de criptografar e descriptografar.
+- Relembrei a parte de ler de arquivo em C++ e a própria liguagem pois fazia tempo que não usava;
+- Atividade foi feita em média de dois dias
 
